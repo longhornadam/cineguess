@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+  cineguess-api:
+    image: cineguess-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8085:8085"
+    environment:
+      # Basic API/env
+      PORT: 8085
+      MOVIE_DATA_ROOT: /mnt/user/CineGuess/private_data/movie_data
+      TMDB_API_KEY: ${TMDB_API_KEY}
+      TMDB_TEST_ID: ${TMDB_TEST_ID:-550}
+      # Uncomment and set if you want DB-backed endpoints (/api/db-check, /api/movies)
+      # DATABASE_URL: ${DATABASE_URL}
+      # PGHOST: ${PGHOST}
+      # PGPORT: ${PGPORT}
+      # PGUSER: ${PGUSER}
+      # PGPASSWORD: ${PGPASSWORD}
+      # PGDATABASE: ${PGDATABASE}
+      # PGSSLMODE: ${PGSSLMODE}
+    volumes:
+      # Mount your private movie assets (metadata/poster/screenshots)
+      - /mnt/user/CineGuess/private_data/movie_data:/mnt/user/CineGuess/private_data/movie_data:ro
+    # If you need to trust self-signed certs for a remote DB, add:
+    #   - NODE_TLS_REJECT_UNAUTHORIZED=0
+    # logging:
+    #   driver: "json-file"
+    #   options:
+    #     max-size: "10m"
+    #     max-file: "3"
