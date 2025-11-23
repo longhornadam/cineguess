@@ -1,0 +1,5 @@
+.env
+/meta
+node_modules/
+build/
+*.log

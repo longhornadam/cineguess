@@ -1,0 +1,17 @@
+{
+    "dependencies": {
+        "@chakra-ui/react": "^2.x.x",
+        "@emotion/react": "^11.x.x",
+        "@emotion/styled": "^11.x.x",
+        "firebase": "^10.x.x",
+        "framer-motion": "^10.x.x",
+        "gh": "^2.8.9",
+        "react": "^18.x.x",
+        "react-dom": "^18.x.x",
+        "zustand": "^4.x.x"
+    },
+    "devDependencies": {
+        "eslint": "^8.x.x",
+        "prettier": "^3.x.x"
+    }
+}
