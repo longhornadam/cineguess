@@ -1,0 +1,10 @@
+STEP 1 - BUILD THE IMAGE
+docker build -t cineguess .
+
+STEP 2 - RUN THE CONTAINER
+docker run -p 8080:8080 cineguess
+
+
+
+
+

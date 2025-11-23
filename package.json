@@ -1,17 +1,26 @@
 {
-    "dependencies": {
-        "@chakra-ui/react": "^2.x.x",
-        "@emotion/react": "^11.x.x",
-        "@emotion/styled": "^11.x.x",
-        "firebase": "^10.x.x",
-        "framer-motion": "^10.x.x",
-        "gh": "^2.8.9",
-        "react": "^18.x.x",
-        "react-dom": "^18.x.x",
-        "zustand": "^4.x.x"
-    },
-    "devDependencies": {
-        "eslint": "^8.x.x",
-        "prettier": "^3.x.x"
-    }
+  "name": "cineguess",
+  "version": "0.0.1",
+  "scripts": {
+    "start:api": "node server/index.js"
+  },
+  "dependencies": {
+    "@chakra-ui/react": "^2.x.x",
+    "@emotion/react": "^11.x.x",
+    "@emotion/styled": "^11.x.x",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "firebase": "^10.x.x",
+    "framer-motion": "^10.x.x",
+    "gh": "^2.8.9",
+    "pg": "^8.11.5",
+    "react": "^18.x.x",
+    "react-dom": "^18.x.x",
+    "zustand": "^4.x.x"
+  },
+  "devDependencies": {
+    "eslint": "^8.x.x",
+    "prettier": "^3.x.x"
+  }
 }

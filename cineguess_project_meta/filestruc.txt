@@ -1,0 +1,58 @@
+# CineGuess File Structure
+
+This document outlines the file and directory structure for the CineGuess project, a movie-guessing web game built with React, Firebase, Zustand, and Chakra UI. It reflects the organization of source code, assets, and configuration files as of February 25, 2025.
+
+## Root Directory
+- `.env`: Environment variables (e.g., Firebase configuration, API keys). Note: This file is included in `.gitignore` for security.
+- `.gitignore`: Specifies files and directories Git should ignore (e.g., `.env`, `/meta`).
+- `package.json`: Project dependencies, scripts, and metadata.
+- `README.md`: High-level project documentation for developers and LLM helpers, providing context and setup instructions.
+- `public/`: Static assets served by the application.
+  - `index.html`: Entry HTML file for the React SPA.
+  - `favicon.ico`: Favicon for the CineGuess website.
+- `src/`: Source code for the React application.
+  - `App.js`: Main application component, orchestrating routing and global state.
+  - `App.css`: Global CSS styles (optional, primarily using Chakra UI for consistency).
+  - `components/`: Reusable UI components for the game.
+    - `Auth/`: Authentication-related components.
+      - `GoogleSignInButton.js`: Button for Google authentication.
+      - `UserProfile.js`: Displays user profile information and stats.
+    - `Game/`: Game mechanics and UI components.
+      - `GameBoard.js`: Main game board displaying the movie poster, guesses, and hints.
+      - `GuessInput.js`: Input field for user guesses, integrated with a "Did You Mean?" feature.
+      - `HintButton.js`: Button to request hints with point costs.
+      - `Screenshot.js`: Component for displaying movie-related screenshots.
+      - `MoviePoster.js`: Component for progressively revealing the movie poster.
+    - `Challenge/`: Challenge-related components.
+      - `ChallengeList.js`: List of available or upcoming challenges.
+      - `ChallengeDetail.js`: Detailed view of a specific challenge.
+      - `ChallengeCard.js`: Preview card for individual challenges.
+    - `LoadingSpinner.js`: Reusable loading indicator for async operations.
+    - `Navbar.js`: Navigation bar for the application.
+  - `contexts/`: React Contexts for global state management.
+    - `AuthContext.js`: Manages authentication state across components.
+  - `hooks/`: Custom React hooks for logic encapsulation.
+    - `useAuth.js`: Handles Firebase authentication logic.
+    - `useMovieData.js`: Fetches and manages movie data from Firebase.
+    - `useChallengeData.js`: Fetches and manages challenge data from Firebase.
+  - `pages/`: Main application routes and page components.
+    - `Home.js`: Home page for game mode selection and profile access.
+    - `Game.js`: In-game page for movie guessing and hint usage.
+    - `Profile.js`: User profile page with stats and leaderboards.
+    - `Challenges.js`: Overview of available (unreleased) challenges for selection.
+    - `Challenge.js`: Focused view of the current active challenge (e.g., Weekly or Daily).
+  - `utils/`: Utility functions and Firebase integration.
+    - `firebase.js`: Firebase initialization and configuration.
+    - `helpers.js`: Helper functions (e.g., score calculation, data formatting).
+    - `guessChecker.js`: Script for handling guess validation, including "Did You Mean?" functionality (disregarding capitalization, punctuation, articles, and prepositions in long titles, with 80-95% similarity suggestions and automatic 96+% matches).
+  - `index.js`: Entry point for the React application, rendering the App component.
+- `.env`: Environment variables (e.g., Firebase configuration, API keys). Note: This file is included in `.gitignore` for security.
+- `/meta/`: Project metadata and documentation (ignored by Git via `.gitignore`).
+  - `filestruc.txt`: This file, describing the project’s file structure.
+  - `techoverview.txt`: Technical overview of the project’s architecture and dependencies.
+
+## Notes
+- All component names use PascalCase for clarity.
+- Hook names start with `use` to follow React conventions.
+- The `/meta` folder and `.env` are excluded from version control via `.gitignore` to protect sensitive data and maintain context for developers and LLMs.
+- The project prioritizes mobile-first design, using Chakra UI for consistent, accessible UI components.

@@ -1,0 +1,103 @@
+You are designing fun and clever movie-guessing challenges for a multi-generational family of movie lovers of varying memory, skill, and frames of reference. There are multiple modes and difficulties settings to keep everything engaged and having a good time. The basic data is already collected and your job is to take the available information and build the 10-movie challenge sets! There are fun and clever seed ideas below, you need to use your wits and the wealth of connectable tags to come up with even more until every movie is represented.
+
+How the Games Work:
+- User picks a challenge in either mode (they see the challenge name and description)
+- After selection, user is given some free hints (difficulty and mode based, not your concern) and a Max score for guessing right the first time
+- User loses points for wrong guesses and can use points to buy more hints (data from collections)
+- When user guesses right or runs out of available points, they get a "Continue" screen to go to the next movie in the challenge
+
+metadata tags inside each document:
+"cast", "decade", "director", "genres", "original_language" (not relevant for you since it's all English), "plot", "production_companies", "release_date", "revenue", "tagline", "title", "tmdb_id", "vote_average" (movie's quality score out of 10 based on user reviews), and "vote_count"
+
+
+Collection #2 is "screenshot_game_movies" and has the same document structure as "text_game_movies"
+
+
+----------- EXAMPLE OF MOVIE DATA --------------
+cast
+(array) 
+0: "Jim Carrey"
+(string) 
+1: "Jeff Daniels"
+(string) 
+2: "Laurie Holden"
+(string) 
+3: "Rachel Melvin"
+(string) 
+4: "Kathleen Turner"
+(string) 
+5: "Rob Riggle"
+(string) 
+decade: "2010s"
+(string) 
+director: "Bobby Farrelly"
+(string) 
+genres
+(array) 
+0: "Comedy"
+(string) 
+original_language: "en"
+(string) 
+plot: "20 years since their first adventure, Lloyd and Harry go on a road trip to find Harry's newly discovered daughter, who was given up for adoption."
+(string) 
+popularity: 43.988
+(number) 
+production_companies
+(array) 
+0: "New Line Cinema"
+(string) 
+1: "Universal Pictures"
+(string) 
+release_date: "2014-11-12"
+(string) 
+revenue: 169837010
+(number) 
+tagline: "The average person uses 10% of their brain capacity. Imagine what he could do with 1%."
+(string) 
+title: "Dumb and Dumber To"
+(string) 
+tmdb_id: "100042"
+(string) 
+vote_average: 5.557
+(number) 
+vote_count: 3197
+-------------------------------------------------------------
+
+each piece of data in the  document is a "hint" for the game
+
+
+Your mission, should you choose to accept it (A mission impossible movie reference lol)...
+STEP 1 - make 10-movie challenges for TEXT_GAME out of "text_game_movies"
+substeps:
+- make a challenges for that mode (10 movies per challenge)
+- be diverse in making connections between metadata/tags and maybe even outside info (DO NOT JUST MAKE CHALLENGES BASED AROUND A SINGLE ACTOR!)
+- give the challenge set a descriptive and amusing name (it's OK to be silly or take goofy risks; it's a game for family fun after all) but don't spoil the guessing!
+- while making the challenge, use all the database info but also use what you know about the industry and culture and movies in general (for instance, if you might know enough to make a "Divorced Couples in Film Together" category) (there will be no extra info given by me beyond the databases, so if you don't have info to use from the outside, that's fine... just use the databases)
+- don't worry about difficulty levels, that will be handled by the game logic later (hints provided, points, etc...)
+- count how many times each movie has been used to make a challenge
+- keep making challenges until all the movies in the database are used at least once (no more than twice) (repeat all sub-steps until very movie's count is either "1" or "2") (there are likely 1500 movies, so 150+ challenges are likely)
+
+
+STEP 2 - do it again for SCREENSHOT_GAME out of "screenshot_game_movies"
+- same substeps as STEP 1
+- if a movie was used twice when making challenges for TEXT_GAME, you can still use it up to twice for SCREENSHOT_GAME (they're separate modes, after all)
+
+The Output will be json or jsonl (either is fine) that looks like this inside for each challenge:
+
+ [
+            {
+                "challenge_id": "MODE-CHALLENGE#",
+                "name": "CHALLENGENAME",
+                "description": "VAGUE-BUT-FUN-CHALLENGE-DESCRIPTION",
+                "movie_ids": ["TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID", "TMDB_ID"],
+                "game_type": "MODE"
+            },
+            
+]
+
+MODE-CHALLENGE# (which # challenge created for this mode) ("TEXT_GAME-39" or "SCREENSHOT_GAME-69" for instance)
+CHALLENGENAME (should be descriptive but not include hints for free) (for a challenge involving Tom Hanks and Paramount Pictures, "Tom and the Mountain" is better than "Tom Hanks Films with Paramount Pictures")
+VAGUE-BUT-FUN-CHALLENGE-DESCRIPTION (A further description of the challenge, again without giving way hints. "The films of a family-friendly mega-Oscar-winner of the 1990s and the studio that brought us Titanic" > "The movies Tom Hanks made with Paramount Pictures.")
+MODE (this is either "TEXT_GAME" if from "text_game_movies" or "SCREENSHOT_GAME" if from "screenshot_game_movies")
+
+the challenge data will be written into a firestore for python/node scripts to pull out later to build a webgame

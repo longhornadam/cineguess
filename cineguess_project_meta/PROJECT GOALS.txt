@@ -1,0 +1,135 @@
+# CineGuess Project Goals
+
+## Overview
+A movie-guessing web game called "CineGuess" using movie metadata and screenshots as hints. 
+- Target audience: Friends and family (max 50 users)
+- Database: 2437 movies with TMDB metadata in JSON format
+- Visual assets: ~1600 movies have 6 screenshots each in folders named by TMDB_ID
+- Hosting: cineguess.plutogang.xyz (accessed from plutogang.xyz homepage)
+- Primary usage: Mobile web browser (no native apps needed)
+
+## Core Functionality
+
+### Authentication & Profiles
+- Google account login
+- User-created nickname for leaderboards
+- Profile page showing:
+  - Overall stats and scores
+  - Strengths/weaknesses (by genre, decade, etc.)
+  - Option to change username
+  - Opt-in/out for cloud messaging notifications
+
+### Game Modes
+- **Freeplay**: Random movie guessing
+- **Challenges**: Curated sets of 10 movies with themes
+- **Daily Challenge**: Same movie for all users on a given day
+
+### Game Mechanics
+- **Easy Mode**: Start with 10 points for immediate correct guess
+- **Hard Mode**: Start with 15 points for immediate correct guess
+- **Hint System**:
+  - Progressive hints with different point costs
+  - High-value hints (cast, director) cost more points
+  - Low-value hints (box office, runtime) cost fewer points
+  - First screenshot free, additional screenshots cost points
+  - Pixelated poster as expensive hint option (progressive de-pixelation)
+- **Scoring**: Points remaining after hint "purchases" = final score
+- **Progress**: Save user's game history (completed/in-progress)
+- **No Time Limits**: Casual, stress-free gameplay
+- **Pass Option**: Skip current movie without penalty (no points awarded)
+
+### Hints Categories (From JSON Metadata)
+- Basic info (year, genre, runtime)
+- Cast and crew
+- Plot synopsis 
+- Screenshots (6 per movie for most films)
+- Pixelated poster (progressive reveal)
+- Box office performance
+- Awards/nominations
+- Critical reception
+
+## Visual Design
+
+### PlutoGang Homepage (Existing)
+- Black background
+- Neon green headings (90s hacker aesthetic)
+- White main text
+- "PLUTO_GANG" heading with blinking underscore
+- Left-justified lowercase link column
+
+### CineGuess Design
+- Dark sunset blue background
+- Sunset orange text for headings
+- White text for clues and hints
+- Helvetica or similar font family
+- Rounded corner buttons with drop-shadow
+- Warm, nostalgic feeling
+
+## Technical Architecture
+
+### Frontend
+- React-based SPA
+- Responsive design (mobile-first)
+- Simple, intuitive UI with minimal onboarding needed
+- Explanatory text rather than tutorial
+
+### Backend & Infrastructure
+- Firebase ecosystem:
+  - Authentication: Firebase Auth with Google sign-in
+  - Database: Firestore for user data, movie metadata, challenges, leaderboards
+  - Storage: Firebase Storage for screenshots and posters
+  - Cloud Messaging: Optional notifications for new challenges
+  - Cloud Functions: For leaderboard updates, challenge management
+
+### Data Management
+- Fetch movie data as needed (with local caching)
+- Progressive loading of assets
+- Pre-fetching of likely next movies
+
+Challenge System (Revised)
+Weekly Challenges
+
+New themed challenge released each week
+Each challenge contains a curated set of 10 themed movies
+Users can earn bonus points/badges for completing the weekly challenge
+
+Challenge Archive
+
+All past weekly challenges remain accessible in an archive
+Users can browse and play any past challenge they missed
+Challenge history displays completion status and scores for the user
+Archive organized chronologically with search/filter capabilities
+Each archived challenge maintains its original theme and movie set
+
+Data Structure for Challenges
+
+Challenge metadata includes:
+
+Unique ID
+Release date
+Theme/title
+Description
+Associated movie IDs
+Difficulty rating
+
+
+
+User Progress Tracking
+
+Track completion status for each challenge (not started, in progress, completed)
+Store user's score for each completed challenge
+Include timestamps for when challenges were started/completed
+Generate stats across all challenges (total completed, average score)
+
+UI Components Needed
+
+Challenge archive page with filtering options
+Weekly challenge highlight/feature on home screen
+Challenge detail view showing theme and user progress
+Challenge completion celebration/summary
+## Development Priorities
+1. Core game mechanics and UI
+2. User authentication and profiles
+3. Basic challenge system
+4. Leaderboards and social features
+5. Advanced challenge generation with AI

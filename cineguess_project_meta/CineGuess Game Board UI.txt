@@ -1,0 +1,62 @@
+# CineGuess Game Board UI
+
+## Primary Game Board Elements
+
+### Top Section
+- **Game Mode Indicator**: Shows current mode (Freeplay/Challenge/Daily)
+- **Score Display**: Current points remaining (starts at 10 for Easy, 15 for Hard)
+- **Progress Indicator**: For challenges, shows X/10 movies completed
+- **Exit/Save Button**: To save progress and return to home
+
+### Initial Hint Section
+- **First Screenshot**: Full-width, prominent display of the first free screenshot
+- **Free Metadata Hints**: Basic info (likely year and genre) in pill/badge format
+- **Guess Counter**: Shows number of attempts made
+
+### Guess Input Area
+- **Text Input Field**: Autocomplete-enabled for movie titles
+- **Submit Button**: To confirm guess
+- **Pass Button**: Option to skip current movie without penalty
+
+### Hint Purchase Section
+- **Hint Categories Dropdown/Grid**: 
+  - Additional Screenshots (with point cost)
+  - Cast Information (higher point cost)
+  - Director/Crew (higher point cost)
+  - Plot Synopsis (medium point cost)
+  - Runtime/Box Office (lower point cost)
+  - Awards/Nominations (medium point cost)
+  - Pixelated Poster (progressive reveal, higher point cost)
+- **Purchase Confirmation**: Confirms point deduction before revealing hint
+
+### Purchased Hints Display
+- **Hint History**: Collapsible section showing all purchased hints
+- **Visual Indication**: Of which hint categories have been purchased already
+
+### Bottom Actions
+- **Give Up Button**: Reveals answer and moves to next movie
+- **Help/Tutorial Toggle**: Quick guide to game mechanics
+- **Feedback Button**: To report issues with specific movies/hints
+
+## UI Considerations
+
+### Mobile-First Design Elements
+- **Bottom-Anchored Controls**: Most interactive elements within thumb reach
+- **Collapsible Sections**: To maximize screen space for primary content
+- **Swipe Actions**: For navigating between hints/screenshots
+- **Touch-Friendly Buttons**: Large hit areas for hint selection
+
+### Visual Style
+- **Dark Sunset Blue Background**: As specified in design guidelines
+- **Sunset Orange Headings**: For section titles and important info
+- **White Text**: For hints and general content
+- **Rounded Corner Buttons**: With subtle drop shadows
+- **Progress Animation**: Subtle visual feedback when hints are purchased
+
+### Feedback Mechanisms
+- **Correct Guess Celebration**: Animation/sound for correct answers
+- **Hint Purchase Confirmation**: Visual acknowledgment of point deduction
+- **Almost-Correct Feedback**: When guess is very close to actual title
+- **Incorrect Guess Indicator**: Visual feedback for wrong answers
+
+Would you like me to expand on any specific area of the game board UI or create a more detailed mockup of certain components?

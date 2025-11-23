@@ -3,3 +3,7 @@
 node_modules/
 build/
 *.log
+bulkdatastuff/movie_images/
+bulkdatastuff/movies.json
+private_data/
+private_scripts/

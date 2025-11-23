@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 670">
+  <!-- Background -->
+  <rect width="400" height="670" fill="#1a2c42" rx="12" ry="12" />
+  
+  <!-- Top Bar - Fixed -->
+  <rect x="10" y="10" width="380" height="50" rx="8" ry="8" fill="#162436" />
+  <text x="20" y="40" font-family="Helvetica, Arial, sans-serif" font-size="18" fill="#ff7b54">DAILY CHALLENGE</text>
+  <text x="320" y="30" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="white" text-anchor="end">TOTAL: 64 PTS</text>
+  <circle cx="350" cy="35" r="18" fill="#162436" stroke="#ff7b54" stroke-width="2" />
+  <text x="350" y="40" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">2/10</text>
+  
+  <!-- Guess Input Area with Pass Button Next to It -->
+  <rect x="10" y="70" width="380" height="60" rx="8" ry="8" fill="#162436" />
+  <rect x="20" y="80" width="230" height="40" rx="20" ry="20" fill="#0a1620" />
+  <text x="40" y="105" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#7a8999">Enter your guess...</text>
+  <rect x="260" y="80" width="70" height="40" rx="20" ry="20" fill="#ff7b54" />
+  <text x="295" y="105" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="white" text-anchor="middle">GUESS</text>
+  <rect x="340" y="80" width="40" height="40" rx="20" ry="20" fill="#162436" stroke="#ff7b54" stroke-width="1" />
+  <text x="360" y="105" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="white" text-anchor="middle">PASS</text>
+  
+  <!-- Movie Screenshot - Larger -->
+  <rect x="10" y="140" width="380" height="240" rx="8" ry="8" fill="#0a1620" />
+  <rect x="20" y="150" width="360" height="220" rx="4" ry="4" fill="#234" />
+  <!-- Screenshot Placeholder -->
+  <text x="200" y="260" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#7a8999" text-anchor="middle">[Movie Screenshot 1/6]</text>
+
+  <!-- Free Hint Pills -->
+  <rect x="10" y="390" width="380" height="50" rx="8" ry="8" fill="#162436" />
+  <rect x="20" y="400" width="80" height="30" rx="15" ry="15" fill="#ff7b5422" stroke="#ff7b54" stroke-width="1" />
+  <text x="60" y="420" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">2015</text>
+  <rect x="110" y="400" width="90" height="30" rx="15" ry="15" fill="#ff7b5422" stroke="#ff7b54" stroke-width="1" />
+  <text x="155" y="420" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">Sci-Fi</text>
+  <rect x="210" y="400" width="110" height="30" rx="15" ry="15" fill="#ff7b5422" stroke="#ff7b54" stroke-width="1" />
+  <text x="265" y="420" font-family="Helvetica, Arial, sans-serif" font-size="14" fill="white" text-anchor="middle">144 min</text>
+  
+  <!-- Buy Hints Dropdown -->
+  <rect x="10" y="450" width="380" height="60" rx="8" ry="8" fill="#162436" />
+  <text x="30" y="485" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ff7b54">BUY HINTS</text>
+  <text x="210" y="485" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="white">12 PTS REMAINING</text>
+  <path d="M355,470 L365,485 L375,470 Z" fill="white" />
+  
+  <!-- First Purchased Hint (Example) -->
+  <rect x="10" y="520" width="380" height="140" rx="8" ry="8" fill="#162436" />
+  <text x="25" y="545" font-family="Helvetica, Arial, sans-serif" font-size="16" fill="#ff7b54">CAST INFO (-3 PTS)</text>
+  <line x1="20" y1="555" x2="370" y2="555" stroke="#ff7b5466" stroke-width="1" />
+  <text x="25" y="580" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="white">Matt Damon as Mark Watney</text>
+  <text x="25" y="610" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="white">Jessica Chastain as Melissa Lewis</text>
+  <text x="25" y="640" font-family="Helvetica, Arial, sans-serif" font-size="15" fill="white">Kristen Wiig as Annie Montrose</text>
+</svg>

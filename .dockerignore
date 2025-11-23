@@ -1,0 +1,10 @@
+.git
+node_modules
+npm-debug.log
+.dockerignore
+.env
+private_data
+private_scripts
+bulkdatastuff
+challengebuilder
+cineguess_project_meta

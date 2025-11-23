@@ -1,0 +1,381 @@
+CineGuess Game Planning Document
+Project Goal: Create a movie guessing game (CineGuess) deployed on Firebase, accessible at moviegame.plutogang.xyz. This document serves as a comprehensive guide for development and future AI assistant onboarding.
+
+Overall Architecture:
+
+Frontend: HTML/CSS/JS. Dynamic content rendering for game interaction.
+
+Backend: Python (Flask framework/blueprint).
+
+Containerization: Docker. (CLI build->deploy remotely preferred to building giant local images, though)
+
+Deployment: Google Cloud Run (stateless, auto-scaling).
+
+User Authentication: Firebase Authentication (Google Sign-In).
+
+Data Storage: gs://cineguess-450920.firebasestorage.app
+Data Storage User: database-boi@cineguess-450920.iam.gserviceaccount.com
+
+Sensitive Info: Google Secrets Manager
+
+Game Modes:
+
+Text Game (Freeplay):
+
+Users are presented with text-based clues about a movie.
+
+Clues: Tagline, Release Date, Cast, Director, Production Companies, Genres, Plot (Plot not available on Hard difficulty).
+
+Difficulty Levels:
+
+Chill: Lower hint costs, more free hints.
+
+Hard: Higher hint costs, fewer free hints, no Plot hint.
+
+Scoring:
+
+Correct Answer (Chill): 10 points.
+
+Correct Answer (Hard): 15 points.
+
+Incorrect Answer (Chill): -1 point.
+
+Incorrect Answer (Hard): -2 points.
+
+Seen Movies: Tracks movies seen by each user in freeplay to avoid repeats.
+
+Screenshot Game (Freeplay):
+
+Users are presented with screenshots and text clues about a movie.
+
+Clues: Up to 6 screenshots, Tagline, Cast, Director, Production Companies, Genres, Plot (Plot not available on Hard difficulty).
+
+Difficulty Levels:
+
+Chill: Lower hint costs, more free hints.
+
+Hard: Higher hint costs, fewer free hints, no Plot hint.
+
+Scoring:
+
+Correct Answer (Chill): 10 points.
+
+Correct Answer (Hard): 15 points.
+
+Incorrect Answer (Chill): -1 point.
+
+Incorrect Answer (Hard): -2 points.
+
+Seen Movies: Tracks movies seen by each user in freeplay to avoid repeats.
+
+Text Game (Challenges):
+
+Pre-defined sets of movies (e.g., "80s Horror").
+
+Users choose a difficulty (Chill or Hard) before starting the challenge. This difficulty is locked for the entire challenge.
+
+Chill: Lower hint costs, more free hints, plot not available.
+
+Hard: Higher hint costs, fewer/no free hints, plot not available.
+
+Scoring: Based on difficulty, as defined above.
+
+One text challenge per week
+
+Screenshot Game (Challenges):
+
+Pre-defined sets of movies.
+
+Users choose a difficulty (Chill or Hard) before starting the challenge. This difficulty is locked for the entire challenge.
+
+Chill: Lower hint costs, more free hints, plot not available.
+
+Hard: Higher hint costs, fewer/no free hints, plot not available.
+
+Scoring: Based on difficulty, as defined above.
+
+One screenshot challenge per week.
+
+Data Sources:
+
+all_movies.jsonl: Metadata for the text game (located in Cloud Storage). Will be imported into the text_game_movies Firestore collection.
+
+screenshot_movies.jsonl: Metadata for the screenshot game (located in Cloud Storage). Will be imported into the screenshot_game_movies Firestore collection.
+
+Screenshot Images: Located in gs://cineguessdbs/screenshots/tmdb-id-of-movie/screenshot#.jpg.
+
+Poster Images: Located in gs://cineguessdbs/posters/tmdb-id-of-movie/poster.jpg.
+
+Firestore Collections:
+
+text_game_movies:
+
+tmdb_id (String, Document ID)
+
+title (String)
+
+revenue (Number)
+
+production_companies (Array of Strings)
+
+director (String)
+
+cast (Array of Strings)
+
+tagline (String) - To be pre-processed to remove movie title.
+
+plot (String) - To be pre-processed to remove movie title.
+
+popularity (Number)
+
+release_date (String)
+
+vote_count (Number)
+
+decade (String)
+
+original_language (String)
+
+genres (Array of Strings)
+
+vote_average (Number): Average vote score from TMDB.
+
+screenshot_game_movies:
+
+Same fields as text_game_movies.
+
+users:
+
+uid (String, Document ID): Firebase Authentication UID.
+
+nickname (String)
+
+seen_movies (Array of Strings): tmdb_id values for freeplay.
+
+total_score (Number): an overall score
+
+challenges:
+
+challenge_id (String, Document ID)
+
+name (String)
+
+description (String)
+
+movie_ids (Array of Strings)
+
+game_type (String): "text" or "screenshot"
+
+user_challenges:
+
+user_challenge_id (String, Document ID): {uid}_{challenge_id}
+
+uid (String)
+
+challenge_id (String)
+
+score (Number)
+
+current_movie_index (Number)
+
+completed (Boolean)
+
+seen_movies (Array of Strings) - Seen movies within this challenge.
+
+difficulty (String): "chill" or "hard"
+
+leaderboards:
+
+leaderboard_id (String, Document ID): A composite key of challenge_id and maybe date created to keep old leaderboards around
+
+challenge_id (String): The ID of the challenge.
+
+scores (Array of Maps):
+
+uid:
+
+nickname:
+
+score:
+
+Firestore Indexes:
+
+users:
+
+Index on uid
+
+challenges:
+
+Index on challenge_id
+
+user_challenges:
+
+Index on user_challenge_id
+
+Index on uid
+
+Index on challenge_id
+
+Index on completed
+
+Index on a composite field of uid and challenge ID
+
+text_game_movies and screenshot_game_movies:
+
+Index on tmdb_id
+
+Index on decade
+
+leaderboards:
+
+Index on leaderboard_id.
+
+Index on challenge_id.
+
+Hint Costs and Availability: 
+
+
+Game Mode	Difficulty	Hint Type	Point Cost	Free Hints
+Text (Freeplay)	Chill	Tagline	1	Tagline, Release Date
+Text (Freeplay)	Chill	Cast	2	Tagline, Release Date
+Text (Freeplay)	Chill	Director	2	Tagline, Release Date
+Text (Freeplay)	Chill	Production Companies	3	Tagline, Release Date
+Text (Freeplay)	Chill	Genres	1	Tagline, Release Date
+Text (Freeplay)	Chill	Vote Average	2	Tagline, Release Date
+Text (Freeplay)	Hard	Tagline	3	Release Date
+Text (Freeplay)	Hard	Cast	4	Release Date
+Text (Freeplay)	Hard	Director	4	Release Date
+Text (Freeplay)	Hard	Production Companies	5	Release Date
+Text (Freeplay)	Hard	Genres	3	Release Date
+Text (Freeplay)	Hard	Vote Average	4	Release Date (Plot not available on Hard)
+Screenshot (Freeplay)	Chill	3rd Screen	1	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	4th Screen	1	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	5th Screen	1	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	6th Screen	1	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Tagline	2	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Cast	3	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Director	3	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Production Companies	4	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Genres	2	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Chill	Vote Average	3	1st Screen, 2nd Screen, Plot
+Screenshot (Freeplay)	Hard	2nd Screen	1	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	3rd Screen	1	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	4th Screen	1	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	5th Screen	1	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	6th Screen	1	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	Plot	N/A	1st Screen, Tagline (Plot not available on Hard)
+Screenshot (Freeplay)	Hard	Cast	4	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	Director	4	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	Production Companies	5	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	Genres	3	1st Screen, Tagline
+Screenshot (Freeplay)	Hard	Vote Average	4	1st Screen, Tagline
+Screenshot (Challenge)	Chill	2nd Screen	1	1st Screen, Plot
+Screenshot (Challenge)	Chill	3rd Screen	1	1st Screen, Plot
+Screenshot (Challenge)	Chill	4th Screen	1	1st Screen, Plot
+Screenshot (Challenge)	Chill	5th Screen	1	1st Screen, Plot
+Screenshot (Challenge)	Chill	6th Screen	1	1st Screen, Plot
+Screenshot (Challenge)	Chill	Tagline	2	1st Screen, Plot
+Screenshot (Challenge)	Chill	Cast	3	1st Screen, Plot
+Screenshot (Challenge)	Chill	Director	3	1st Screen, Plot
+Screenshot (Challenge)	Chill	Production Companies	4	1st Screen, Plot
+Screenshot (Challenge)	Chill	Genres	2	1st Screen, Plot
+Screenshot (Challenge)	Chill	Vote Average	3	1st Screen, Plot
+Screenshot (Challenge)	Hard	2nd Screen	1	1st Screen
+Screenshot (Challenge)	Hard	3rd Screen	1	1st Screen
+Screenshot (Challenge)	Hard	4th Screen	1	1st Screen
+Screenshot (Challenge)	Hard	5th Screen	1	1st Screen
+Screenshot (Challenge)	Hard	6th Screen	1	1st Screen
+Screenshot (Challenge)	Hard	Plot	N/A	1st Screen (Plot not available on Hard)
+Screenshot (Challenge)	Hard	Tagline	3	1st Screen
+Screenshot (Challenge)	Hard	Cast	4	1st Screen
+Screenshot (Challenge)	Hard	Director	4	1st Screen
+Screenshot (Challenge)	Hard	Production Companies	5	1st Screen
+Screenshot (Challenge)	Hard	Genres	3	1st Screen
+Screenshot (Challenge)	Hard	Vote Average	4	1st Screen
+Text (Challenge)	Chill	Tagline	1	Plot, Release Date
+Text (Challenge)	Chill	Cast	2	Plot, Release Date
+Text (Challenge)	Chill	Director	2	Plot, Release Date
+Text (Challenge)	Chill	Production Companies	3	Plot, Release Date
+Text (Challenge)	Chill	Genres	1	Plot, Release Date
+Text (Challenge)	Chill	Vote Average	1	Plot, Release Date
+Text (Challenge)	Hard	Tagline	3	Release Date
+Text (Challenge)	Hard	Cast	4	Release Date
+Text (Challenge)	Hard	Director	4	Release Date
+Text (Challenge)	Hard	Production Companies	5	Release Date
+Text (Challenge)	Hard	Genres	3	Release Date
+Text (Challenge)	Hard	Vote Average	3	Release Date
+
+
+
+
+
+
+"Did You Mean?" Logic:
+
+Client-side input (movie title guess).
+
+Fetch all movie titles from the relevant Firestore collection.
+
+Client-side filtering using Levenshtein distance.
+
+Present close matches to the user.
+
+User Authentication:
+
+Google Sign-In via Firebase Authentication.
+
+User-chosen nickname (stored in Firestore).
+
+Profile page to change nickname and reset freeplay progress.
+
+Flask Blueprints:
+
+The application will be structured using Flask blueprints:
+
+text_game: Handles routes and logic for the text-based game.
+
+screenshot_game: Handles routes and logic for the screenshot-based game.
+
+auth: Handles user authentication.
+
+profile: Handles user profile management (nickname, freeplay reset).
+
+Project Directory Structure: (See example structure above)
+
+Deployment:
+
+Single Dockerfile for the entire application.
+
+Single Cloud Run service.
+
+Data Pre-processing (Automated Title Removal):
+
+Before importing data into Firestore, a script will process all_movies.jsonl and screenshot_movies.jsonl.
+
+The script will automatically detect and replace movie titles (and close variations) within the tagline and plot fields with a placeholder (e.g., "[MOVIE TITLE]").
+
+Action Items (Next Steps):
+
+Create Firestore Indexes: Create the indexes defined above.
+
+Write Data Pre-processing Script: Implement the automated title removal script.
+
+Populate Firestore: Import the pre-processed data into Firestore.
+
+Begin Flask Development:
+
+Set up Firebase Authentication.
+
+Connect to Firestore.
+
+Implement game logic (using Flask blueprints).
+
+Implement hint logic and scoring.
+
+Implement "Did you mean?" logic.
+
+Create user profile page.
+
+Build Dockerfile: Create the Dockerfile for deployment.
+
+Deploy to Cloud Run: Deploy the application.

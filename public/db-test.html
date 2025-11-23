@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineGuess DB Smoke Test</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      button { margin-right: 8px; }
+      pre { background: #f4f4f4; padding: 12px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>CineGuess DB Smoke Test</h1>
+    <p>Use these buttons to hit the API and verify the database wiring.</p>
+    <div>
+      <button onclick="hit('/api/health')">Health</button>
+      <button onclick="hit('/api/db-check')">DB Check</button>
+      <button onclick="hit('/api/movies')">Sample Movies</button>
+    </div>
+    <pre id="output">No requests yet.</pre>
+
+    <script>
+      async function hit(path) {
+        const output = document.getElementById("output");
+        output.textContent = `Requesting ${path}...`;
+        try {
+          const res = await fetch(path);
+          const text = await res.text();
+          let data;
+          try {
+            data = JSON.parse(text);
+          } catch (_) {
+            data = text;
+          }
+          output.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          output.textContent = `Error: ${err.message}`;
+        }
+      }
+    </script>
+  </body>
+ </html>

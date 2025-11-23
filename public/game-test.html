@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineGuess Game Preview</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      .card { border: 1px solid #ddd; padding: 16px; border-radius: 6px; margin-bottom: 16px; }
+      img { max-width: 100%; height: auto; border-radius: 4px; }
+      .screens { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; }
+      pre { background: #f8f8f8; padding: 12px; border-radius: 4px; overflow: auto; }
+      button { margin-right: 8px; }
+    </style>
+  </head>
+  <body>
+    <h1>CineGuess Game Preview</h1>
+    <p>Shows sample movie metadata and images from <code>MOVIE_DATA_ROOT</code> via <code>/api/local-movies</code>.</p>
+    <div>
+      <button onclick="loadMovie()">Load Sample Movie</button>
+    </div>
+    <div id="movie"></div>
+    <pre id="raw">No data yet.</pre>
+
+    <script>
+      async function loadMovie() {
+        const movieDiv = document.getElementById("movie");
+        const raw = document.getElementById("raw");
+        movieDiv.textContent = "Loading...";
+        raw.textContent = "";
+        try {
+          const res = await fetch("/api/local-movies?limit=1");
+          const data = await res.json();
+          if (!data.ok || !data.movies || data.movies.length === 0) {
+            movieDiv.textContent = "No movies found or MOVIE_DATA_ROOT not mounted.";
+            raw.textContent = JSON.stringify(data, null, 2);
+            return;
+          }
+          const m = data.movies[0];
+          movieDiv.innerHTML = `
+            <div class="card">
+              <h2>${m.title || "Untitled"} (${m.release_date || "n/a"})</h2>
+              <p>${m.tagline || ""}</p>
+              ${m.poster ? `<img src="${m.poster}" alt="poster" />` : "<p>No poster</p>"}
+              <h3>Screenshots</h3>
+              <div class="screens">
+                ${m.screenshots.map(url => `<img src="${url}" alt="screenshot" />`).join("") || "<p>No screenshots</p>"}
+              </div>
+            </div>
+          `;
+          raw.textContent = JSON.stringify(m, null, 2);
+        } catch (err) {
+          movieDiv.textContent = `Error: ${err.message}`;
+          raw.textContent = err.stack || err.message;
+        }
+      }
+    </script>
+  </body>
+ </html>

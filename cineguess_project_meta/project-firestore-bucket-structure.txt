@@ -1,0 +1,68 @@
+firestore info
+
+Collection (Description):
+screenshot_challenges (challenges (list of 10 movies) for the screenshot mode of CineGuess, the movie guessing game)
+
+screenshot_game_movies (info and screenshots for the screenshot mode of CineGuess)
+
+text_challenges (challenges (list of 10 movies) for the text mode of CineGuess)
+
+text_game_movies (info and posters for the text mode of CineGuess)
+
+Collection Structures:
+
+"screenshot_game_movies"
+- document (document name is the TMDB_ID of a movie)
+--cast: (array with strings inside)
+--decade: (string)
+--director: (string)
+--genres: (array with strings inside)
+--original_language: (string)
+--plot: (string)
+--popularity: (number)
+--production_companies: (array with strings inside)
+--release_date: (string)
+--revenue: (number)
+--tagline: (string)
+--title: (string)
+--tmdb_id: (string)
+--vote_average: (number)
+--vote_count: (number)
+
+
+"text_game_movies"
+--cast: (array with strings inside)
+--decade: (string)
+--director: (string)
+--genres: (array with strings inside)
+--original_language: (string)
+--plot: (string)
+--popularity: (number)
+--production_companies: (array with strings inside)
+--release_date: (string)
+--revenue: (number)
+--tagline: (string)
+--title: (string)
+--tmdb_id: (string)
+--vote_average: (number)
+--vote_count: (number)
+
+"screenshot_challenges" structure
+- document (document name is "Challenge1" ascending)
+-- challenge_Name: (String)
+-- movies: (array with numbers inside)
+
+"text_challenges" structure
+-document (document name is "Challenge1" ascending)
+-- challenge_Name: (String)
+-- movies: (array with numbers inside)
+
+storage bucket (gs://cineguess-450920.firebasestorage.app)
+
+/posters/
+- all subfolders are named by TMDB_ID
+- inside each subfolder is "poster.jpg", that movie's poster
+
+/screenshots/
+- all subfolders are named by TMDB_ID
+- inside each subfolder is "screenshot1.jpg" through "screenshot6.jpg" (6 total from the same movie)

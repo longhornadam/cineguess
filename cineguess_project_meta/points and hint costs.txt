@@ -1,0 +1,60 @@
+Costs:
+
+Freeplay Chill (FC):
+Freeplay Tryhard (FT):
+
+Challenge Chill (CC):
+Challenge Tryhard (CT):
+
+cast: FC:2, FT:3, CC:2, CT:3
+director: FC:1, FT:3, CC:1, CT:3
+genres: FC:1, FT:2, CC:1, CT:2
+plot: FC:4, FT:9, CC:4, CT:9
+production_companies: FC:1, FT:2, CC:1, CT:2
+release_date: FC:1, FT:2, CC:1, CT:2
+revenue: FC:1, FT:1, CC:1, CT:1
+tagline: free for all
+vote_average:
+movie_initials: FC:4, FT:9, CC:4, CT:9
+screenshots: 1st is free for all
+poster: free if no screenshot (but heavily pixelated via React)
+
+
+
+{
+    "cast": [
+      "Val Kilmer",
+      "Elisabeth Shue",
+      "Rade Šerbedžija",
+      "Henry Goodman",
+      "Alun Armstrong",
+      "Michael Byrne"
+    ],
+    "decade": "1990s",
+    "director": "Phillip Noyce",
+    "genres": [
+      "Thriller",
+      "Action",
+      "Romance",
+      "Science Fiction",
+      "Adventure"
+    ],
+    "original_language": "en",
+    "plot": "Simon Templar (), is a thief for hire, whose latest job to steal the secret process for cold fusion puts him at odds with a traitor bent on toppling the Russian government, as well as the woman who holds its secret.",
+    "popularity": 4.883,
+    "production_companies": [
+      "Paramount Pictures",
+      "Rysher Entertainment"
+    ],
+    "release_date": "1997-04-03",
+    "revenue": "$118,100,000",
+    "tagline": "Never reveal your name. Never turn your back. Never surrender your heart.",
+    "title": "The Saint",
+    "tmdb_id": "10003",
+    "vote_average": 6.106,
+    "vote_count": 1124,
+    "movie_initials": "TS",
+    "challenge_id": "",
+    "poster": true,
+    "screenshots": false
+  },

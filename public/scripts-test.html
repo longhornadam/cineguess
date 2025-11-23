@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CineGuess Scripts/Test</title>
+    <style>
+      body { font-family: Arial, sans-serif; margin: 24px; }
+      input { padding: 6px; }
+      button { padding: 6px 10px; margin-left: 8px; }
+      pre { background: #f8f8f8; padding: 12px; border-radius: 4px; }
+    </style>
+  </head>
+  <body>
+    <h1>CineGuess Scripts/Test</h1>
+    <p>Ping TMDB via <code>/api/tmdb/ping</code> to confirm API key and connectivity.</p>
+    <div>
+      <label for="tmdb">TMDB ID:</label>
+      <input id="tmdb" value="550" />
+      <button onclick="pingTmdb()">Ping TMDB</button>
+    </div>
+    <pre id="out">No requests yet.</pre>
+
+    <script>
+      async function pingTmdb() {
+        const id = document.getElementById("tmdb").value.trim() || "550";
+        const out = document.getElementById("out");
+        out.textContent = `Requesting /api/tmdb/ping?tmdb_id=${id}...`;
+        try {
+          const res = await fetch(`/api/tmdb/ping?tmdb_id=${encodeURIComponent(id)}`);
+          const data = await res.json();
+          out.textContent = JSON.stringify(data, null, 2);
+        } catch (err) {
+          out.textContent = `Error: ${err.message}`;
+        }
+      }
+    </script>
+  </body>
+ </html>
